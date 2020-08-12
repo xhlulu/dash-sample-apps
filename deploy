@@ -143,9 +143,7 @@ main() {
     log-fail "Unable to clone repository"
   fi
 
-  git submodule init
-
-  remote_sha=$(git -C "$tmp_shallow_clone" log --pretty=format:"%h" 2>/dev/null || true)
+  remote_sha=$(git -C "$tmp_shallow_clone" log --pretty=format:"%h" 2>/dev/null || true)  
   log-info "remote-sha: $remote_sha"
   if [[ -z "$remote_sha" ]]; then
     log-header "Initializing repository"
