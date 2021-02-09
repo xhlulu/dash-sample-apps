@@ -4,7 +4,7 @@ on:
     branches:
       - master
 
-name: Release and upload assets
+name: Bump version
 
 jobs:
   build:
@@ -13,11 +13,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-#       - name: Bump version and push tag
-#         uses: anothrNick/github-tag-action@1.34.0
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           WITH_V: true
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.34.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
 #       - name: Zip apps
 #         run: |
 #           cd ./apps;
@@ -25,16 +25,16 @@ jobs:
 #             echo "Zipping ${f}...";
 #             zip -qr "${f%/*}" "${f}"*;
 #           done
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+#       - name: Create Release
+#         id: create_release
+#         uses: actions/create-release@v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           tag_name: ${{ github.ref }}
+#           release_name: Release ${{ github.ref }}
+#           draft: false
+#           prerelease: false
 #       - name: Upload assets
 #         run: |
 #           set -x
