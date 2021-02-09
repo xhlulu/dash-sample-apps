@@ -13,20 +13,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.34.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-      - name: Zip apps
-        run: |
-          cd ./apps;
-          for f in */; do
-            echo "Zipping ${f}...";
-            zip -qr "${f%/*}" "${f}"*;
-          done
+#       - name: Bump version and push tag
+#         uses: anothrNick/github-tag-action@1.34.0
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           WITH_V: true
+#       - name: Zip apps
+#         run: |
+#           cd ./apps;
+#           for f in */; do
+#             echo "Zipping ${f}...";
+#             zip -qr "${f%/*}" "${f}"*;
+#           done
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -37,15 +35,15 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Upload assets
-        run: |
-          set -x
-          assets=()
-          for asset in ./*.zip; do
-            assets+=("-a" "$asset")
-          done
-          tag_name="${GITHUB_REF##}"
-          hub release create "${assets[@]}" -m "$tag_name" "$tag_name"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REF: ${{ github.ref }}
+#       - name: Upload assets
+#         run: |
+#           set -x
+#           assets=()
+#           for asset in ./*.zip; do
+#             assets+=("-a" "$asset")
+#           done
+#           tag_name="${GITHUB_REF##}"
+#           hub release create "${assets[@]}" -m "$tag_name" "$tag_name"
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GITHUB_REF: ${{ github.ref }}
