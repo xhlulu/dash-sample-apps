@@ -1,8 +1,8 @@
 on:
   push:
     # Sequence of patterns matched against refs/tags
-    branch:
-    - 'master'
+    tags:
+    - 'v*'
 
 name: Upload Release Asset
 
