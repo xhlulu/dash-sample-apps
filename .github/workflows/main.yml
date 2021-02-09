@@ -47,7 +47,7 @@ jobs:
           for asset in ./*.zip; do
             assets+=("-a" "$asset")
           done
-          hub release create "${assets[@]}" -m "Release ${RELEASE_TAG}" "$RELEASE_TAG"
+          hub release create "${assets[@]}" -m "Release ${RELEASE_TAG}" "${RELEASE_TAG}"
           cd -;
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
