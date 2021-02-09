@@ -31,22 +31,25 @@ jobs:
           release_name: Release ${{ steps.version_bump.outputs.new_tag }}
           draft: false
           prerelease: false
-#       - name: Zip apps
-#         run: |
-#           cd ./apps;
-#           for f in */; do
-#             echo "Zipping ${f}...";
-#             zip -qr "${f%/*}" "${f}"*;
-#           done
-#       - name: Upload assets
-#         run: |
-#           set -x
-#           assets=()
-#           for asset in ./*.zip; do
-#             assets+=("-a" "$asset")
-#           done
-#           tag_name="${GITHUB_REF##}"
-#           hub release create "${assets[@]}" -m "$tag_name" "$tag_name"
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           GITHUB_REF: ${{ github.ref }}
+      - name: Compress apps
+        run: |
+          cd ./apps;
+          for f in */; do
+            echo "Zipping ${f}...";
+            zip -qr "${f%/*}" "${f}"*;
+          done
+          cd -;
+      - name: Upload zipped apps to release
+        run: |
+          cd ./apps;
+          set -x
+          assets=()
+          for asset in ./*.zip; do
+            assets+=("-a" "$asset")
+          done
+          tag_name="${GITHUB_REF}"
+          hub release create "${assets[@]}" -m "$tag_name" "$tag_name"
+          cd -;
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REF: ${{ steps.version_bump.outputs.new_tag }}
