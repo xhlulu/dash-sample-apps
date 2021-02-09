@@ -1,10 +1,9 @@
 on:
   push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-    - 'v*'
+    branches:
+      - master
 
-name: Upload Release Asset
+name: Release and upload assets
 
 jobs:
   build:
@@ -13,6 +12,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.34.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           zip --junk-paths my-artifact apps/dash-3d-image-partitioning/
