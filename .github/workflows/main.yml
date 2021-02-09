@@ -41,10 +41,11 @@ jobs:
         run: |
           set -x
           assets=()
-          for asset in ./*.md; do
+          for asset in ./*.zip; do
             assets+=("-a" "$asset")
           done
-          tag_name="${GITHUB_REF##*/}"
+          tag_name="${GITHUB_REF##}"
           hub release create "${assets[@]}" -m "$tag_name" "$tag_name"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REF: ${{ github.ref }}
