@@ -1,5 +1,14 @@
 # Dash Sample Apps [![CircleCI](https://circleci.com/gh/plotly/dash-sample-apps.svg?style=svg)](https://circleci.com/gh/plotly/dash-sample-apps)
 
+Replace `<appname>` with the name of the sample app you want to download.
+```bash
+wget https://github.com/plotly/dash-sample-apps/releases/latest/download/<appname>.zip
+unzip <appname>.zip
+cd <appname>/
+pip install -r requirements.txt
+python app.py
+```
+
 This is a monorepo designed to host all of the apps that have been
 created for the Python Dash Gallery.
 
