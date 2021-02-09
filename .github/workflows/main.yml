@@ -4,7 +4,7 @@ on:
     branches:
       - master
 
-name: Bump version
+name: Release and upload apps
 
 jobs:
   build:
@@ -27,8 +27,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ version_bump.outputs.new_tag }}
-          release_name: Release ${{ version_bump.outputs.new_tag }}
+          tag_name: ${{ steps.version_bump.outputs.new_tag }}
+          release_name: Release ${{ steps.version_bump.outputs.new_tag }}
           draft: false
           prerelease: false
 #       - name: Zip apps
